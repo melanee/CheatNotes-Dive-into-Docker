@@ -37,12 +37,12 @@ Writting the Dokerfile specification::
      RUN <install dependencies>
           ex. RUN pip install -r requirements.txt
 
-     COPY <. for recursively from Dockerfile path> <. for relative to WORKDIR path>
+     COPY <. for recursively from Dockerfile source path> <. for relative to WORKDIR path inside image>
           ex.  COPY . .
 
      LABEL <key="value"> <...> ...
           ex.  LABEL maintainer="Melanee Hannah <melanee@tutanota.de>" \
-     version="1.0"
+                     version="1.0"
 
      CMD <run command when docker image is started as opposed to when it is build>
           ex. CMD flask run --host=0.0.0.0 --port=5000
