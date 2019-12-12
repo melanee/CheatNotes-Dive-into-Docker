@@ -18,7 +18,9 @@ Building
   Takes the specification of an image and package it as per the docker standard.
 
 Dockerfile
-  Read line by lines the specificaton sequentially each actionable step become a seperate layer in the Docker image.
+----------
+
+Read line by lines the specificaton sequentially each actionable step become a seperate layer in the Docker image.
 
 When building an image only the self contain layer that have changed are updated.
 
@@ -48,8 +50,8 @@ Writting the Dokerfile specification::
           ex. CMD flask run --host=0.0.0.0 --port=5000
 
 
-Image building command
-----------------------
+Image Management Command
+------------------------
 
 Image command build::
 
@@ -140,11 +142,46 @@ Running
 ******************************
 A running instance of a image is called a container. Container are immutable and independant of each other.
 
-List of active containers::
+Container Management Command
+============================
 
-    container ls -a
+Container command for listing containers::
 
-This paragraphe end the literal block
+    container ls [-a]
+    -a:without list active containers with -a list all active and non-active containers
+
+Conainer command for running a instance of an image::
+
+     docker containr run -it -p [<bind port on docker host>:]<bind port in the container>  [--name <container-name>] [-e <variable=value> ...] [-d] [--rm|--restart on-failure] <image>
+          ex. docker container run -it -p 5000:5000  --name web1 -e FLASK_APP=app.py --rm web1
+          ex. docker container run -it -p 5000 --name web1_2 -e FLASK_APP=app.py -d --restart on-failure web1
+
+     -it: itractive terminal
+     -p:Binds random host port if non exitant or specified host port to container port  
+     --name:custom container-name 
+     -e:environment variable 
+     -d:run as a deamon return a container-id
+     --rm:remove container when stopped 
+     --restart on-failure: mutualy exclusive to --rm 
+
+Container command for deleting container::
+
+      docker container rm <container-id>|<container-name>
+           ex. docker container rm hardcore_dijkstra
+      container-id:Found by `docker container ls -a` use 4 first digit of CONTAINER ID field
+
+Container command logs::
+
+      docker container logs <container-id>|<container-name> [-f]
+           ex. docker logs -f web1
+      -f:Foreground when present and single step if non existant
+
+
+Container command stop::
+
+      docker container stop <container-id>|<container-name>
+           ex. docker stop  web1
+      
 
 *********
  Network
