@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  
+  <title>Dive into docker &mdash; CheatSheet 1.0 documentation</title>    
+  
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <link rel="stylesheet" href="../../_static/css/main.css">
+  
+  
+      
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script src="../../_static/js/main.js"></script>
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../../_static/images/favicon.ico">
+
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="canonical" href="/doc/sheet/Sheet.html" />
+
+</head>
+<body class="">
+
+  <header class="navigation">
+    <div class="wrapper">
+      <a href="../../index.html" class="logo">
+        <img src="../../_static/images/logo.png" alt="Logo">
+      </a>
+      <a href="../../index.html" class="navigation-menu logo-text"></a>
+      <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">Menu</a>
+      <nav>
+        <ul id="js-navigation-menu" class="navigation-menu show">
+          
+	      <li class="nav-link"><div style="display:inline-block;vertical-align: middle;"><div class="search-bar"><form role="search" action="../../search.html" method="get">
+    <input type="search" name="q" placeholder="Search" />
+    <button type="submit">
+      <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png" alt="Search Icon">
+    </button>
+    </form>
+</div></div></li>
+        </ul>
+      </nav>
+      
+    </div>
+  </header>
+
+<!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+    <div id="hacketyhackhack"> <!-- style="width:20%;margin-right: 100px;"> --> <!--style="display: none;"> style="display:none;"> -->
+    <div class="toc" style="width:15%; margin-right:20px;">
+      <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dive into docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker-image-management">Docker image management!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pulling">Pulling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker-hub">Docker Hub</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running">Running</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-container-management">Docker container management!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#network">Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prius-quam">Prius Quam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#punctum-temporis">Punctum Temporis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-posteriori">A Posteriori</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rapports">Rapports</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#logs">Logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stat">Stat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    </div>
+    <div class="content"> <!-- style="max-width:80%;margin-left:auto;margin-right: auto;">-->
+        
+  <div class="section" id="dive-into-docker">
+<h1>Dive into docker<a class="headerlink" href="#dive-into-docker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="docker-image-management">
+<span id="image"></span><h2>Docker image management!<a class="headerlink" href="#docker-image-management" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Images</dt><dd><p>Images are build, pull or run.</p>
+</dd>
+<dt><em>Image</em></dt><dd><p>Is a file specification of it’s content.</p>
+</dd>
+</dl>
+<div class="section" id="building">
+<h3>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Takes the specification of an image and package it as per the docker standard.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Dockerfile</dt><dd><p>Read line by lines the specificaton sequentially each actionable step become a seperate layer in the Docker image.</p>
+</dd>
+</dl>
+<p>When building an image only the self contain layer that have changed are updated.</p>
+<p>Writting the Dokerfile specification:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="o">&lt;</span><span class="n">base</span><span class="o">-</span><span class="n">image</span><span class="o">&gt;</span><span class="p">[:</span><span class="n">tag</span><span class="p">]</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">FROM</span> <span class="n">python</span><span class="p">:</span><span class="mf">3.8</span><span class="o">-</span><span class="n">alpine</span>
+
+<span class="n">RUN</span> <span class="o">&lt;</span><span class="n">run</span> <span class="k">as</span> <span class="n">inside</span> <span class="n">container</span> <span class="n">base</span><span class="o">-</span><span class="n">image</span> <span class="p">(</span><span class="n">script</span><span class="o">.</span><span class="n">shell</span><span class="p">,</span><span class="n">linux</span><span class="p">)</span>  <span class="n">command</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">RUN</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">app</span>
+<span class="n">WORKDIR</span> <span class="o">&lt;</span><span class="nb">set</span> <span class="n">a</span> <span class="n">contextual</span> <span class="n">path</span> <span class="kn">from</span> <span class="nn">this</span> <span class="n">point</span> <span class="n">on</span> <span class="n">to</span> <span class="n">refered</span>  <span class="n">to</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">WORKDIR</span> <span class="o">/</span><span class="n">app</span>
+
+<span class="n">COPY</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">within</span> <span class="n">the</span> <span class="n">Dockerfile</span> <span class="n">path</span> <span class="ow">or</span> <span class="n">sub</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">destination</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">base</span><span class="o">-</span><span class="n">image</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">COPY</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">RUN</span> <span class="o">&lt;</span><span class="n">install</span> <span class="n">dependencies</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">RUN</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="n">COPY</span> <span class="o">&lt;.</span> <span class="k">for</span> <span class="n">recursively</span> <span class="kn">from</span> <span class="nn">Dockerfile</span> <span class="n">path</span><span class="o">&gt;</span> <span class="o">&lt;.</span> <span class="k">for</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">WORKDIR</span> <span class="n">path</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span>  <span class="n">COPY</span> <span class="o">.</span> <span class="o">.</span>
+
+<span class="n">LABEL</span> <span class="o">&lt;</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="o">&gt;</span> <span class="o">&lt;...&gt;</span> <span class="o">...</span>
+     <span class="n">ex</span><span class="o">.</span>  <span class="n">LABEL</span> <span class="n">maintainer</span><span class="o">=</span><span class="s2">&quot;Melanee Hannah &lt;melanee@tutanota.de&gt;&quot;</span> \
+<span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>
+
+<span class="n">CMD</span> <span class="o">&lt;</span><span class="n">run</span> <span class="n">command</span> <span class="n">when</span> <span class="n">docker</span> <span class="n">image</span> <span class="ow">is</span> <span class="n">started</span> <span class="k">as</span> <span class="n">opposed</span> <span class="n">to</span> <span class="n">when</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">build</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">CMD</span> <span class="n">flask</span> <span class="n">run</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pulling">
+<h3>Pulling<a class="headerlink" href="#pulling" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The deamon (client) tries localy to find the image else download it from the docker hub repository.</p>
+</div></blockquote>
+<p>Pulling an image from the repository at the docker hub registry:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="p">[[</span><span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;/</span><span class="p">]</span><span class="o">&lt;</span><span class="n">name</span> <span class="n">space</span><span class="o">&gt;/</span><span class="p">]</span><span class="n">image</span>
+
+<span class="p">:</span><span class="n">url</span><span class="p">:</span> <span class="n">Url</span> <span class="n">of</span> <span class="n">the</span> <span class="n">registry</span> <span class="ow">or</span> <span class="n">docker</span><span class="o">.</span><span class="n">io</span> <span class="ow">or</span> <span class="n">default</span> <span class="n">Docker</span> <span class="n">Hub</span> <span class="n">Registry</span>
+<span class="p">:</span><span class="n">name</span> <span class="n">space</span><span class="p">:</span> <span class="n">User</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">library</span> <span class="k">for</span> <span class="n">default</span> <span class="n">Docker</span> <span class="n">Hub</span> <span class="n">Registry</span>
+<span class="p">:</span><span class="n">image</span><span class="p">:</span> <span class="n">The</span> <span class="n">image</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Repsitory</span> <span class="ow">and</span> <span class="n">Image</span>
+</pre></div>
+</div>
+<div class="section" id="docker-hub">
+<h4>Docker Hub<a class="headerlink" href="#docker-hub" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Where you find official images and can publish your non-official images privatly or publicly.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Is a  Docker Registry.</p></li>
+<li><p>Docker Registry contains Docker Repository.</p></li>
+<li><p>Docker Repository is a version controle of an image.</p>
+<ul>
+<li><p>Has a collection of Docker images all with the same name.</p></li>
+</ul>
+</li>
+<li><p>Docker image the image</p>
+<ul>
+<li><p>Has a Tag that identify the image</p></li>
+</ul>
+</li>
+<li><p>Tag is a the version id  of the image. Default to a tag named latest.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="running">
+<h3>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Create a instance of the image</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="docker-container-management">
+<span id="container"></span><h2>Docker container management!<a class="headerlink" href="#docker-container-management" title="Permalink to this headline">¶</a></h2>
+<p>A running instance of a image is called a container. Container are immutable and independant of each other.</p>
+<p>List of active containers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="n">ls</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>This paragraphe end the literal block</p>
+</div>
+<div class="section" id="network">
+<h2>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prius-quam">
+<span id="id1"></span><h3>Prius Quam<a class="headerlink" href="#prius-quam" title="Permalink to this headline">¶</a></h3>
+<p>Içi l’instant précédent de l’action.</p>
+</div>
+<div class="section" id="punctum-temporis">
+<span id="id2"></span><h3>Punctum Temporis<a class="headerlink" href="#punctum-temporis" title="Permalink to this headline">¶</a></h3>
+<p>Içi le déroulement de l’action.</p>
+</div>
+<div class="section" id="a-posteriori">
+<span id="id3"></span><h3>A Posteriori<a class="headerlink" href="#a-posteriori" title="Permalink to this headline">¶</a></h3>
+<p>Içi l’instant après l’action.</p>
+</div>
+</div>
+<div class="section" id="rapports">
+<h2>Rapports<a class="headerlink" href="#rapports" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logs">
+<span id="id4"></span><h3>Logs<a class="headerlink" href="#logs" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="stat">
+<span id="id5"></span><h3>Stat<a class="headerlink" href="#stat" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="notes">
+<span id="id6"></span><h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+    </div>
+  </div>
+
+<!-- END MAIN BODY OF DOCS ––––––––––––– -->
+
+<footer class="footer">
+  <div class="footer-links">
+    <ul>
+      <li><span class="footer-title">Links</span></li>
+      
+    </ul>
+    <ul>
+      <li><span class="footer-title">Join Us</span></li>
+      
+    </ul>
+    <ul class="copyright">
+      <li>2019, Melanee Hannah</li>
+    </ul>
+  </div>
+</footer>
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<!-- MathJax Config -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
