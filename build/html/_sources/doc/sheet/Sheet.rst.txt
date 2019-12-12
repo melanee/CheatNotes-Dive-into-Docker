@@ -47,6 +47,58 @@ Writting the Dokerfile specification::
      CMD <run command when docker image is started as opposed to when it is build>
           ex. CMD flask run --host=0.0.0.0 --port=5000
 
+
+Image building command
+----------------------
+
+Image command build::
+
+     docker image build [<option>] [<image-id>[:<version>]] <path>
+          ex. docker image build -t web1:1.0 . 
+     
+     build:Parsing and building the Dockerfile
+     -t:tag iname of image
+     image-id:Randowm hash or name of the tag for image if option -t 
+     path:ibuild the current directory 
+
+Image command inspect::
+
+     docker image inspect <image-id>
+          ex. docker inspect web1
+
+     inspect:shoes a json dump about the image 
+      
+Image command delete::
+
+     docker image rm <image-id>|<repository>[<:tagname>]
+          ex. docker image rm web1:1.0
+
+Image command tagging username::
+
+     docker image tag <source> <username>/<repository>:<tagname>|[latest]
+          ex. docker image tag web1 melanee/web1:latest
+
+Image command login in Docker Hub::
+
+     docker login
+
+Image command pushing to Docker Hub::
+
+     docker image push <username>/<repository>:<tagname>|[latest]
+          ex. docker image push melanee/web1:latest 
+
+Image command delete local image by image-id::
+
+     docker image rm  -f <image-id>
+          ex. docker image rm -f 1d08
+     -f:force will insure all image deletes
+     image-id:Found by `docker image ls` use 4 first digit of IMAGE ID field
+
+Image command pulling from Docker Hub::
+
+     docker image pull <username>/<repository>:<tagname>
+          ex. docker pull melanee/web1:latest
+
 Pulling
 =======
   The deamon (client) tries localy to find the image else download it from the docker hub repository.

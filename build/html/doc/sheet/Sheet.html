@@ -86,7 +86,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../Introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Dive into docker</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#docker-image-management">Docker image management!</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building">Building</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#image-building-command">Image building command</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#pulling">Pulling</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#docker-hub">Docker Hub</a></li>
 </ul>
@@ -159,6 +162,57 @@
 <span class="n">CMD</span> <span class="o">&lt;</span><span class="n">run</span> <span class="n">command</span> <span class="n">when</span> <span class="n">docker</span> <span class="n">image</span> <span class="ow">is</span> <span class="n">started</span> <span class="k">as</span> <span class="n">opposed</span> <span class="n">to</span> <span class="n">when</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">build</span><span class="o">&gt;</span>
      <span class="n">ex</span><span class="o">.</span> <span class="n">CMD</span> <span class="n">flask</span> <span class="n">run</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">5000</span>
 </pre></div>
+</div>
+<div class="section" id="image-building-command">
+<h4>Image building command<a class="headerlink" href="#image-building-command" title="Permalink to this headline">¶</a></h4>
+<p>Image command build:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">build</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">option</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">image</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span><span class="p">[:</span><span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="p">]]</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">web1</span><span class="p">:</span><span class="mf">1.0</span> <span class="o">.</span>
+
+<span class="n">build</span><span class="p">:</span><span class="n">Parsing</span> <span class="ow">and</span> <span class="n">building</span> <span class="n">the</span> <span class="n">Dockerfile</span>
+<span class="o">-</span><span class="n">t</span><span class="p">:</span><span class="n">tag</span> <span class="n">iname</span> <span class="n">of</span> <span class="n">image</span>
+<span class="n">image</span><span class="o">-</span><span class="nb">id</span><span class="p">:</span><span class="n">Randowm</span> <span class="nb">hash</span> <span class="ow">or</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">tag</span> <span class="k">for</span> <span class="n">image</span> <span class="k">if</span> <span class="n">option</span> <span class="o">-</span><span class="n">t</span>
+<span class="n">path</span><span class="p">:</span><span class="n">ibuild</span> <span class="n">the</span> <span class="n">current</span> <span class="n">directory</span>
+</pre></div>
+</div>
+<p>Image command inspect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">image</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">docker</span> <span class="n">inspect</span> <span class="n">web1</span>
+
+<span class="n">inspect</span><span class="p">:</span><span class="n">shoes</span> <span class="n">a</span> <span class="n">json</span> <span class="n">dump</span> <span class="n">about</span> <span class="n">the</span> <span class="n">image</span>
+</pre></div>
+</div>
+<p>Image command delete:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">rm</span> <span class="o">&lt;</span><span class="n">image</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;|&lt;</span><span class="n">repository</span><span class="o">&gt;</span><span class="p">[</span><span class="o">&lt;</span><span class="p">:</span><span class="n">tagname</span><span class="o">&gt;</span><span class="p">]</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">rm</span> <span class="n">web1</span><span class="p">:</span><span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>Image command tagging username:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">tag</span> <span class="o">&lt;</span><span class="n">source</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/&lt;</span><span class="n">repository</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">tagname</span><span class="o">&gt;|</span><span class="p">[</span><span class="n">latest</span><span class="p">]</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">tag</span> <span class="n">web1</span> <span class="n">melanee</span><span class="o">/</span><span class="n">web1</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
+<p>Image command login in Docker Hub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">login</span>
+</pre></div>
+</div>
+<p>Image command pushing to Docker Hub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">push</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/&lt;</span><span class="n">repository</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">tagname</span><span class="o">&gt;|</span><span class="p">[</span><span class="n">latest</span><span class="p">]</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">push</span> <span class="n">melanee</span><span class="o">/</span><span class="n">web1</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
+<p>Image command delete local image by image-id:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker image rm  -f &lt;image-id&gt;
+     ex. docker image rm -f 1d08
+-f:force will insure all image deletes
+image-id:Found by `docker image ls` use 4 first digit of IMAGE ID field
+</pre></div>
+</div>
+<p>Image command pulling from Docker Hub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">pull</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;/&lt;</span><span class="n">repository</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">tagname</span><span class="o">&gt;</span>
+     <span class="n">ex</span><span class="o">.</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">melanee</span><span class="o">/</span><span class="n">web1</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="pulling">
