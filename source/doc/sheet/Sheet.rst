@@ -8,23 +8,20 @@
  Docker image management!
 **************************
 Images
-  Images are build, pull or run.
+  Are build, pull or run.
 
-*Image*
+Image
   Is a file specification of it's content. 
 
 Building
-========
   Takes the specification of an image and package it as per the docker standard.
 
 Dockerfile
-----------
+  Read line by lines the specificaton sequentially each actionable step become a seperate layer in the Docker image.
 
-Read line by lines the specificaton sequentially each actionable step become a seperate layer in the Docker image.
+  When building an image only the self contain layer that have changed are updated.
 
-When building an image only the self contain layer that have changed are updated.
-
-Writting the Dokerfile specification::
+**Writting the Dokerfile specification**::
 
      FROM <base-image>[:tag]
           ex. FROM python:3.8-alpine
@@ -51,7 +48,7 @@ Writting the Dokerfile specification::
 
 
 Image Management Command
-------------------------
+========================
 
 Image command build::
 
@@ -102,7 +99,6 @@ Image command pulling from Docker Hub::
           ex. docker pull melanee/web1:latest
 
 Pulling
-=======
   The deamon (client) tries localy to find the image else download it from the docker hub repository.
 
 Pulling an image from the repository at the docker hub registry::
@@ -115,7 +111,6 @@ Pulling an image from the repository at the docker hub registry::
 
 
 Docker Hub
-----------
   Where you find official images and can publish your non-official images privatly or publicly.
 
 * Is a  Docker Registry.
@@ -131,7 +126,6 @@ Docker Hub
 * Tag is a the version id  of the image. Default to a tag named latest.
 
 Running
-=======
   Create a instance of the image
 
  
