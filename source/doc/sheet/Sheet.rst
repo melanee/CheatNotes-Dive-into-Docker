@@ -126,7 +126,7 @@ Docker Hub
 * Tag is a the version id  of the image. Default to a tag named latest.
 
 Running
-  Create a instance of the image
+  Create a instance of the image.
 
  
 .. _Container:
@@ -146,7 +146,8 @@ Container command for listing containers::
 
 Conainer command for running a instance of an image::
 
-     docker containr run -it -p [<bind port on docker host>:]<bind port in the container>  [--name <container-name>] [-e <variable=value> ...] [-d] [--rm|--restart on-failure] <image>
+     docker containr run -it -p [<bind port on docker host>:]<bind port in the container> \
+     [--name <container-name>] [-e <variable=value> ...] [-d] [--rm|--restart on-failure] <image>
           ex. docker container run -it -p 5000:5000  --name web1 -e FLASK_APP=app.py --rm web1
           ex. docker container run -it -p 5000 --name web1_2 -e FLASK_APP=app.py -d --restart on-failure web1
 
@@ -176,6 +177,29 @@ Container command stop::
       docker container stop <container-id>|<container-name>
            ex. docker stop  web1
       
+*********************************************************
+Container debuging using live code reloading with volumes
+*********************************************************
+
+   In this course we use FLASK Framework for debuging we need to activate the debug while running  the container so we use  another flag environment FLASK_DEBUG=1
+   We also use volume to link  a path of local storage to a path inside docker image already defined in Dockerfile (/app)
+
+Container flag volume use in debug::
+
+     docker containr run -it -p [<bind port on docker host>:]<bind port in the container> \
+     [--name <container-name>] [-e <variable=value> ...] -v <local-path>:<image-path> --rm <image>
+           ex. docker container run -it -p 5000:5000 -name web1 -e FLASK_APP=app.py \
+               -e FLASK_DEBUG=1 -v $PWD:/app --rm web1
+
+Container running process inside the container::
+
+     docker container exec -it --user <user:group> <image-name> <cmd>
+          ex. docker container exec -it --user $(id -u):$(id -g) web1 sh
+     exec:run the cmd inside the container
+     cmd:linux command
+     --user:$(id -u)=current user on linux. $(id -g)=curent group of user.
+
+
 
 *********
  Network
