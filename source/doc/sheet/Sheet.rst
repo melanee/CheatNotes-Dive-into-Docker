@@ -199,6 +199,9 @@ Container running process inside the container::
      cmd:linux command
      --user:$(id -u)=current user on linux. $(id -g)=curent group of user.
 
+Practical usage Running a image to learn languages::
+
+     docker container run -it --name testing-python --rm python:3.8-alpine python
 
 
 *********
