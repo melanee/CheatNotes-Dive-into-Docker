@@ -441,12 +441,13 @@ Docker docker-entrypoint.sh script
  
 
       :WEB2_COUNTER_MSG: Use by app.py part of business logic code 
-      :exec "$@":Execute the script code including any environment variables pass in the CMD line of the Dockerfile. it is executing  /bin/sh -c "$ && FLASK ...
+      :exec "$@":Execute the script code including any custom arguments \
+          pass in the CMD line of the Dockerfile and  environment variables. It is executing  /bin/sh -c "$ &&  ...
 
 Docker updated Dockerfile
 -------------------------
 
-:;
+::
 
     COPY docker-entrypoint.sh /
     RUN chmod +x /docker-entrypoint.sh
@@ -455,4 +456,14 @@ Docker updated Dockerfile
       :COPY:local-file to inside container path. Using in this case root-path
       :ENTRYPOINT:Dockerfile command; local-entrypoint-script
 
+Docker entrypoint command
+-------------------------
 
+``docker container run -itd -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] -e custom environement ariable ... --rm --net <network-name> <image>``
+
+::
+
+    docker container run -it -p 5000:5000 -e FLASK_APP=app.py \
+       -e WEB2_COUNTER_MSG="Docker fans have visited this web site" \
+        -e FLASK_DEBUG=1 --name webentrypoint  --rm --net firstnetwork webentrypoint
