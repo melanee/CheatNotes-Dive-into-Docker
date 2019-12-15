@@ -371,11 +371,88 @@ Volume command and data management
 
 ::
 
-   doker container run -itd -p 6379:6379 --name redis --rm --net firstnetwork -v web2_redis:/data redis:3.2-alpine
+   docker container run -itd -p 6379:6379 --name redis --rm --net firstnetwork \
+     -v web2_redis:/data redis:3.2-alpine
 
       :named-volume:Volume created for persistence on the host
       :image-path:volume inside the container provide by resis README on Docker Hub
 
 
+Sharring data between containers
+--------------------------------
+
+Modifying Dockerfile to share /app/public volume between containers::
+
+   VOLUME ["/app/public"] 
+
+Building the new image::
+
+   docker image build -t web2 .
+
+Or without modifying the Dockerfile:
+
+``docker container run -itd -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] -v <local-path>:<image-path> -v <source-name-volume> --rm --net <network-name> <image>``
+ 
+::
+
+   docker container run -itd -p 5000:5000 --name web2 \
+      -e FLASK_APP=app.py -e FLASK_DEBUG=1 -v $PWD:/app -rm -net firstnetwork web2
+
+   docker container run -itd -p 5000:5000 --name web2 \
+      -e FLASK_APP=app.py -e FLASK_DEBUG=1 -v $PWD:/app -v /app/public -rm -net firstnetwork web2
+
+Then in both case: 
+
+``docker container run -itd -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] -v <named-volume>:<image-path> --volumes-from <remote-name-container> --rm --net <network-name> <image>``
+
+::
+
+   docker container run -itd -p 6379:6379 --name redis --rm --net firstnetwork \
+   -v web2_redis:/data --volumes-from web2 redis:3.2-alpine
+
+*************************
+Running ENTRYPOINT SCRIPT
+*************************
+
+Entrypoint sctipt
+  The docker entrypoint script customized each containers running the image.
+
+Pre requesit
+============
+
+* Docker-entrypoint script in the local-path.
+* Modified updated Dockerfile
+
+Docker docker-entrypoint.sh script
+----------------------------------
+
+::
+
+    #!/bin/sh
+    set -e
+
+    echo "The Dockerfile ENTRYPOINT has been executed!"
+
+    export WEB2_COUNTER_MSG="${WEB2_COUNTER_MSG:-carbon based life forms have sensed this website}"
+
+    exec "$@"
+ 
+
+      :WEB2_COUNTER_MSG: Use by app.py part of business logic code 
+      :exec "$@":Execute the script code including any environment variables pass in the CMD line of the Dockerfile. it is executing  /bin/sh -c "$ && FLASK ...
+
+Docker updated Dockerfile
+-------------------------
+
+:;
+
+    COPY docker-entrypoint.sh /
+    RUN chmod +x /docker-entrypoint.sh
+    ENTRYPOINT ["docker-entrypoint.sh"]
+
+      :COPY:local-file to inside container path. Using in this case root-path
+      :ENTRYPOINT:Dockerfile command; local-entrypoint-script
 
 
