@@ -17,7 +17,7 @@ Building
   Takes the specification of an image and package it as per the docker standard.
 
 Dockerfile
-  Read line by lines the specificaton sequentially each actionable step become a seperate layer in the Docker image.
+  Written line by lines sequentially  is a specificaton, each actionable step become a seperate layer in the Docker image.
 
   When building an image only the self contain layer that have changed are updated.
 
@@ -50,64 +50,95 @@ Dockerfile
 Image Management Command
 ========================
 
-Image command build::
+Image command listing images
+----------------------------
 
-     docker image build [<option>] [<image-id>[:<version>]] <path>
-          ex. docker image build -t web1:1.0 . 
+``docker image ls``
+::
+
+   docker image ls 
+
+
+Image command build
+-------------------
+
+``docker image build [<option>] [<image-id>[:<version>]] <path>``
+::
+
+   docker image build -t web1:1.0 . 
      
-     build:Parsing and building the Dockerfile
-     -t:tag iname of image
-     image-id:Randowm hash or name of the tag for image if option -t 
-     path:ibuild the current directory 
+     :build:Parsing and building the Dockerfile
+     :-t:tag iname of image
+     :image-id:Randowm hash or name of the tag for image if option -t 
+     :path:ibuild the current directory 
 
-Image command inspect::
+Image command inspect
+---------------------
 
-     docker image inspect <image-id>
-          ex. docker inspect web1
+``docker image inspect <image-id>``
+::
 
-     inspect:shoes a json dump about the image 
+   docker inspect web1
+
+    :inspect:show a json dump about the image 
       
-Image command delete::
+Image command delete
+--------------------
 
-     docker image rm <image-id>|<repository>[<:tagname>]
-          ex. docker image rm web1:1.0
+``docker image rm [-f] <image-id>|<repository>[<:tagname>]``
+::
 
-Image command tagging username::
+   docker image rm web1:1.0
 
-     docker image tag <source> <username>/<repository>:<tagname>|[latest]
-          ex. docker image tag web1 melanee/web1:latest
+   docker image rm -f 1d08
 
-Image command login in Docker Hub::
+    : -f:force will insure all image deletes
+    :image-id:Found by `docker image ls` use 4 first digit of IMAGE ID field
 
-     docker login
+Image command tagging username
+------------------------------
 
-Image command pushing to Docker Hub::
+``docker image tag <source> <username>/<repository>:<tagname>|[latest]``
+::
 
-     docker image push <username>/<repository>:<tagname>|[latest]
-          ex. docker image push melanee/web1:latest 
+   docker image tag web1 melanee/web1:latest
 
-Image command delete local image by image-id::
+Image command login in Docker Hub
+---------------------------------
+::
 
-     docker image rm  -f <image-id>
-          ex. docker image rm -f 1d08
-     -f:force will insure all image deletes
-     image-id:Found by `docker image ls` use 4 first digit of IMAGE ID field
+   docker login
 
-Image command pulling from Docker Hub::
+Image command pushing to Docker Hub
+-----------------------------------
 
-     docker image pull <username>/<repository>:<tagname>
-          ex. docker pull melanee/web1:latest
+``docker image push <username>/<repository>:<tagname>|[latest]``
+::
+
+   docker image push melanee/web1:latest 
+
+Image command pulling from Docker Hub
+-------------------------------------
+
+``docker image pull <username>/<repository>:<tagname>``
+::
+
+   docker pull melanee/web1:latest
 
 Pulling
   The deamon (client) tries localy to find the image else download it from the docker hub repository.
 
-Pulling an image from the repository at the docker hub registry::
+Pulling an image from the repository at the docker hub registry
+---------------------------------------------------------------
 
-    docker run [[<url>/]<name space>/]image
+``docker run [[<url>/]<name space>/]image``
+::
+
+   docker run docker.io/library/python:3.8-alpine
 
     :url: Url of the registry or docker.io or default Docker Hub Registry 
     :name space: User name or library for default Docker Hub Registry 
-    :image: The image name of the Repsitory and Image
+    :image: The image name of the Repsitory hence the Image
 
 
 Docker Hub
@@ -125,8 +156,9 @@ Docker Hub
 
 * Tag is a the version id  of the image. Default to a tag named latest.
 
+
 Running
-  Create a instance of the image.
+  Run create a running instance of an image as a component of a container.
 
  
 .. _Container:
@@ -139,110 +171,211 @@ A running instance of a image is called a container. Container are immutable and
 Container Management Command
 ============================
 
-Container command for listing containers::
+Container command listing containers
+------------------------------------
 
-    container ls [-a]
-    -a:without list active containers with -a list all active and non-active containers
+``docker container ls [-a]``
+::
 
-Conainer command for running a instance of an image::
+   docker container ls -a
 
-     docker containr run -it -p [<bind port on docker host>:]<bind port in the container> \
-     [--name <container-name>] [-e <variable=value> ...] [-d] [--rm|--restart on-failure] <image>
-          ex. docker container run -it -p 5000:5000  --name web1 -e FLASK_APP=app.py --rm web1
-          ex. docker container run -it -p 5000 --name web1_2 -e FLASK_APP=app.py -d --restart on-failure web1
+    :-a:without list active containers with -a list all active and non-active containers
 
-     -it: itractive terminal
-     -p:Binds random host port if non exitant or specified host port to container port  
-     --name:custom container-name 
-     -e:environment variable 
-     -d:run as a deamon return a container-id
-     --rm:remove container when stopped 
-     --restart on-failure: mutualy exclusive to --rm 
+Conainer command running a instance of an image
+-----------------------------------------------
 
-Container command for deleting container::
+``docker containr run -it -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] [-d] [--rm|--restart on-failure] <image>``
 
-      docker container rm <container-id>|<container-name>
-           ex. docker container rm hardcore_dijkstra
-      container-id:Found by `docker container ls -a` use 4 first digit of CONTAINER ID field
+::
 
-Container command logs::
+   docker container run -it -p 5000:5000  --name web1 -e FLASK_APP=app.py --rm web1
+   docker container run -it -p 5000 --name web1_2 -e FLASK_APP=app.py -d --restart on-failure web1
 
-      docker container logs <container-id>|<container-name> [-f]
-           ex. docker logs -f web1
-      -f:Foreground when present and single step if non existant
+     :-it:itractive terminal
+     :-p:Binds random host port if non exitant or specified host port to container port  
+     :--name:custom container-name 
+     :-e:environment variable 
+     :-d:run as a deamon return a container-id
+     :--rm:remove container when stopped 
+     :--restart on-failure: mutualy exclusive to --rm 
+
+Container command deleting container
+------------------------------------
+
+``docker container rm <container-id>|<container-name>``
+::
+
+   docker container rm hardcore_dijkstra
+
+     :container-id:Found by `docker container ls -a` use 4 first digit of CONTAINER ID field
+
+Container command logs
+----------------------
+
+``docker container logs [-f] <container-id>|<container-name>``
+::
+
+   docker logs -f web1
+
+      :-f:Foreground when present and single step if non existant
 
 
-Container command stop::
+Container command stop
+----------------------
 
-      docker container stop <container-id>|<container-name>
-           ex. docker stop  web1
+``docker container stop <container-id>|<container-name>``
+::
+
+   docker stop  web1
       
-*********************************************************
 Container debuging using live code reloading with volumes
-*********************************************************
+=========================================================
 
    In this course we use FLASK Framework for debuging we need to activate the debug while running  the container so we use  another flag environment FLASK_DEBUG=1
    We also use volume to link  a path of local storage to a path inside docker image already defined in Dockerfile (/app)
 
-Container flag volume use in debug::
+Container flag volume use in debug
+----------------------------------
 
-     docker containr run -it -p [<bind port on docker host>:]<bind port in the container> \
-     [--name <container-name>] [-e <variable=value> ...] -v <local-path>:<image-path> --rm <image>
-           ex. docker container run -it -p 5000:5000 -name web1 -e FLASK_APP=app.py \
-               -e FLASK_DEBUG=1 -v $PWD:/app --rm web1
+``docker containr run -it -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] -v <local-path>:<image-path> --rm <image>``
 
-Container running process inside the container::
+::
 
-     docker container exec -it --user <user:group> <image-name> <cmd>
-          ex. docker container exec -it --user $(id -u):$(id -g) web1 sh
-     exec:run the cmd inside the container
-     cmd:linux command
-     --user:$(id -u)=current user on linux. $(id -g)=curent group of user.
+   docker container run -it -p 5000:5000 -name web1 -e FLASK_APP=app.py \
+     -e FLASK_DEBUG=1 -v $PWD:/app --rm web1
 
-Practical usage Running a image to learn languages::
+      :-it: itractive terminal
+      :-p:Binds random host port if non exitant or specified host port to container port  
+      :--name:custom container-name 
+      :-e:environment variable 
+      :-v:local-path:image-path
 
-     docker container run -it --name testing-python --rm python:3.8-alpine python
+Container running process inside the container
+----------------------------------------------
+
+``docker container exec -it --user <user:group> <image-name> <cmd>``
+::
+
+   docker container exec -it --user $(id -u):$(id -g) web1 sh
+
+     :exec:run the cmd inside the container
+     :-it: itractive terminal
+     :--user:$(id -u)=current user on linux. $(id -g)=curent group of user.
+     :cmd:linux command
+
+Practical usage Running a image to learn languages
+--------------------------------------------------
+::
+
+   docker container run -it --name testing-python --rm python:3.8-alpine python
 
 
 *********
  Network
 *********
+   Docker use a default bridge which has a gateway IP address, where containers connect their internal interface which have default attributed IPs of the same default subnet.
+   The default network use hash host-id as host-name making difficult for internetworking  because of the need to hard code the IP address of their remote host during communication.
+   However the ability to create bridge has DNS implemented wich permits to use host-name during internetwroking communication.
 
-.. _Prius Quam:
+  
+**************************
+ Docker network management
+**************************
 
-Prius Quam
-==========
-Içi l'instant précédent de l'action.
+Network Management Command
+==========================
+Default bridge
+   The default bridge have as device docker0, type ifconfig at the terminal to list the network devices.
 
-.. _Punctum Temporis:
+Network command listing networks
+--------------------------------
 
-Punctum Temporis
-================
-Içi le déroulement de l'action.
+``docker network ls``
+::
 
-.. _A Posteriori:
+   docker network ls 
 
-A Posteriori
-============
-Içi l'instant après l'action.
 
-**********
- Rapports
-**********
+Network command inspect network
+-------------------------------
 
-.. _Logs:
+``docker network inspect <networki-name>``
+::
 
-Logs
-====
+   docker network inspect bridge
 
-.. _Stat:
 
-Stat
-====
+Network command create bridge
+-----------------------------
+``docker network create --driver bridge <network-name>``
+::
 
-.. _Notes:
+    docker network create --driver bridge firstnetwork
 
-*******
- Notes
-*******
+Network command add container to bridge       
+---------------------------------------
+
+``docker container run -itd -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] -v <local-path>:<image-path> --rm --net <network-name> <image>``
+
+::
+
+   docker container run -itd -p 6379:6379 -name redis \ 
+     -v $PWD:/app --rm --net firstnetwork redis:3.2-alpine
+
+   docker container run -itd -p 5000:5000 -name web2 -e FLASK_APP=app.py \
+     -e FLASK_DEBUG=1 -v $PWD:/app --rm --net firstnetwork web2
+
+
+Practical usage exec a process in a container to use network utilities
+----------------------------------------------------------------------
+
+``docker exec <container-name> <utility>``
+::
+
+   docker exec redis ifconfig
+
+   docker exec redis ping 172.17.0.3 
+     :172:17:0:3:Internal address of web2
+
+   docker exec redis ping web2 
+
+
+*************************
+ Docker volume management
+*************************
+
+Volume Management Command
+=========================
+
+Name Volume
+     A named volume makes docker manage a persistent volume on the host, making the image no more stateless therefore not scalable.
+
+Volume command and data management
+----------------------------------
+
+``docker volume create <volume-name>``
+::
+
+   docker volume create web2_redis
+
+   docker volume ls
+
+   docker volume inspect web2_redis
+
+
+``docker container run -itd -p [<bind port on docker host>:]<bind port in the container> \``
+     ``[--name <container-name>] [-e <variable=value> ...] -v <named-volume>:<image-path> --rm --net <network-name> <image>``
+
+::
+
+   doker container run -itd -p 6379:6379 --name redis --rm --net firstnetwork -v web2_redis:/data redis:3.2-alpine
+
+      :named-volume:Volume created for persistence on the host
+      :image-path:volume inside the container provide by resis README on Docker Hub
+
+
+
 
