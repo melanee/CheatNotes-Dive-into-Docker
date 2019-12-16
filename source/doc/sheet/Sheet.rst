@@ -467,3 +467,78 @@ Docker entrypoint command
     docker container run -it -p 5000:5000 -e FLASK_APP=app.py \
        -e WEB2_COUNTER_MSG="Docker fans have visited this web site" \
         -e FLASK_DEBUG=1 --name webentrypoint  --rm --net firstnetwork webentrypoint
+
+
+********************
+Using Docker Compose
+********************
+
+Adding docker-compose.yml and env
+=================================
+
+Docker Compose
+  Use directives in a yaml file to run containers 
+
+docker-compose.yml
+------------------
+| version: <"value">
+|    Service-directives:
+|      Service-name:
+|      image: <"image-name"> | build: <"host-path">
+|      [depends_on-list:
+|        - <"Remote-Service-name">]
+|      [env-file-list:
+|        - "env-file"]
+|      ports-list:
+|        - <"local-port:image-port">
+|      volumes-list:
+|        - <"name-volume:image-path|local-path:image-path">
+|
+|  volume-directive:
+|    ref-to-name-volume-of-service: {[options]}    
+
+::
+
+    version: "3"
+
+    services:
+      redis:
+        image: "redis:3.2-alpine"
+        ports:
+          - "6379:6379"
+        volumes:
+          - "redis:/data"  
+
+
+      web:
+        build: .
+        depends_on:
+          - "redis"
+        env_file:
+          - ".env"
+        #images: "melanee/web:1.0"
+        ports:
+          - "5000:5000"
+        volumes:
+          -   ".:/app"
+
+    volumes:
+      redis: {}
+
+env-file
+--------
+``COMPOSE_PROJECT_NAME=<project-name>``
+
+``key=<value>``
+
+``...``
+
+::
+
+    COMPOSE_PROJECT_NAME=web2
+
+    PYTHONBUFFERED=true
+    FLASK_APP=app.py
+    FLASK_DEBUG=1
+
+
