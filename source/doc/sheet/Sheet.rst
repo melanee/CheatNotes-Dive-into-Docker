@@ -497,6 +497,7 @@ docker-compose.yml
 |  volume-directive:
 |    ref-to-name-volume-of-service: {[options]}    
 
+
 ::
 
     version: "3"
@@ -509,7 +510,6 @@ docker-compose.yml
         volumes:
           - "redis:/data"  
 
-
       web:
         build: .
         depends_on:
@@ -521,9 +521,11 @@ docker-compose.yml
           - "5000:5000"
         volumes:
           -   ".:/app"
-
     volumes:
       redis: {}
+
+      :images: "melanee/web:1.0":Used at smae time as build it will tag the image on Docker Hub or another registry 
+
 
 env-file
 --------
@@ -540,5 +542,132 @@ env-file
     PYTHONBUFFERED=true
     FLASK_APP=app.py
     FLASK_DEBUG=1
+
+Docker compose management
+-------------------------
+
+``docker-compose build``
+
+::
+
+    docker-compose build
+
+      :build:build all services of docke-compose.yml who contain this directive 
+
+``docker-compose pull``
+
+::
+
+    docker-composw pull
+
+      :pull:pull images of all services of docker-compose.yml.
+
+``docker-compose up``
+ 
+::
+
+    docker-compose up
+
+      :up:bring all services running.
+
+``docker-compose up --build -d``
+
+::
+
+    docker-compose up --build -d
+
+      :up --build: build, pull and run all services at once.
+      :-d:run in background
+
+``docker-compose ps``
+
+::
+
+    docker-compose ps
+
+      :ps:list all runnng containers
+
+``docker-compose exec <service-name> <command>``
+
+::
+
+    docker-compose exec web sh
+
+``docker-compose run <service-name> <service-command> <service-argument>``
+
+::
+
+ docker-compose run redis redis-server --version
+
+      :run:bring up the service do exec service.
+
+Overiding the Dockerfile CMD
+----------------------------
+
+background worker
+  run the application in a separate context using same code? without using ports.
+
+::
+  
+   version: '3'
+
+   services:
+     redis:
+       image: 'redis:3.2-alpine'
+       ports:
+         - '6379:6379'
+        
+      volumes:
+         - 'redis:/data'
+
+     web:
+       build: .
+       depends_on:
+         - 'redis'
+       env_file:
+         - '.env'
+       ports:
+         - '5000:5000'
+       volumes:
+         - '.:/app'
+
+     worker:
+       build: .
+       command: celery ...  <-- this is the overide of the CMD in Dockerfile
+       depends_on:
+         - 'redis'
+       env_file:
+         - '.env'
+
+       volumes:
+         - '.:/app'
+
+   volumes:
+     redis: {}
+
+*******************
+Dockerizing Web App
+*******************
+
+General Tips
+============
+
+Suggested files
+---------------
+
+- Dockerfile
+- .dockerignore
+- docker-compopse.yml
+- .env
+
+- Logs files from may framework writes to an internal folder. It should be writen to STDOUT so the Docker Daemon can handle it. As per FLASK it by default write it's log files to STDOUT.
+
+- Separate all your environment files.
+
+- Keep your app stateless. Use REDIS as key=value permanent session storage.
+
+Research the guide on the '12 factor app' a web app development strategy. Focus on maintanability and portability.
+
+
 
 
